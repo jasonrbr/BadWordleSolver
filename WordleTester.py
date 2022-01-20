@@ -21,13 +21,18 @@ wins = 0
 w = Wordle()
 #w = CustomSolver()
 l = []
+wrong = []
 for word in w.getWord():
     w.newGame(word)
     guesses = w.game()
     wins += int(guesses < 7)
     if guesses < 7:
         l.append(guesses)
+    else:
+        wrong.append(w.targetWord)
 
 print("{0} Wins out of {1}".format(wins, len(w.word_list)))
 print()
 print("Average: {}".format(sum(l)/len(l)))
+
+#print(*wrong, sep =',')

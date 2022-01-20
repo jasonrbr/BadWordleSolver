@@ -26,3 +26,5 @@ To test out your wordscore run python WordleTest.py. It will let you know how ma
 many guesses on average it took.
 
 It implements a custom Wordle game wher you can change the wordscore method and test it out by commenting the and uncommenting lines 21 /22
+
+You can also uncomment the last line to see what words it couldn't solve in 6 tries.
