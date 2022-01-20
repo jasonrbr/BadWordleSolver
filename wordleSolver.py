@@ -1,4 +1,4 @@
-from random import sample
+from random import sample, shuffle
 from wordlist import WORDS
 
 
@@ -7,6 +7,7 @@ class Wordle():
     def __init__(self):
 
         self.word_list = WORDS
+        shuffle(self.word_list)
         self.corpus = [word for word in self.word_list]
         self.letFreq = {chr(i): 0 for i in range(97, 97+26)}
         self.targetWord = sample(self.corpus, 1)[0]
@@ -68,22 +69,27 @@ class Wordle():
         if word == self.targetWord:
             return True
         else:
-            filter(word, self.targetWord)
+            self.filter(word)
             return False
 
     def getWord(self):
-        for word in self.corpus:
+        for word in self.word_list:
             yield word
 
     def game(self):
-        guesses = 0
-        word = self.findbestGuess()
-        while not self.guess(word, self.targetWord) and guesses < 7:
+        guesses = 1
+        word = self.findBestGuess()
+        while not self.guess(word):
             guesses += 1
-            word = self.findbestGuess()
+            word = self.findBestGuess()
+            if guesses > 7:
+                break
 
         return guesses
 
-    def newGame(self):
-        self.corpus = [word[:-1] for word in self.word_list]
-        self.targetWord = sample(self.corpus, 1)[0]
+    def newGame(self, word=None):
+        self.corpus = [word for word in self.word_list]
+        if not word:
+            self.targetWord = sample(self.corpus, 1)[0]
+        else:
+            self.targetWord = word
