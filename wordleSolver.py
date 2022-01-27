@@ -81,7 +81,7 @@ class Wordle():
         starting_words = ['shear', 'wound', 'blimp']
         for word in starting_words:
             if self.guess(word):
-                break
+                return guesses
             guesses += 1
         word = self.findBestGuess()
         while not self.guess(word):
