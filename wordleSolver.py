@@ -43,7 +43,7 @@ class Wordle():
             elif letter not in self.targetWord:
                 self.corpus = [w for w in self.corpus if letter not in w]
             else:
-                self.corpus = [w for w in self.corpus if letter in w]
+                self.corpus = [w for w in self.corpus if letter in w and w[i] != letter]
 
     def enterFilter(self, guess, map):
         for i, r in enumerate(map):
@@ -78,6 +78,11 @@ class Wordle():
 
     def game(self):
         guesses = 1
+        starting_words = ['shear', 'wound', 'blimp']
+        for word in starting_words:
+            if self.guess(word):
+                break
+            guesses += 1
         word = self.findBestGuess()
         while not self.guess(word):
             guesses += 1
