@@ -35,4 +35,4 @@ print("{0} Wins out of {1}".format(wins, len(w.word_list)))
 print()
 print("Average: {}".format(sum(l)/len(l)))
 
-#print(*wrong, sep =',')
+print(*wrong, sep =',')

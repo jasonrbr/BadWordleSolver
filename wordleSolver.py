@@ -15,6 +15,16 @@ class Wordle():
             for let in word.lower():
                 self.letFreq[let] += 1
 
+    def getStartingWords(self, num=3):
+        corpus_copy = [w for w in self.corpus]
+        words = []
+        while len(words) < num:
+            word = self.findBestGuess(corpus_copy)
+            words.append(word)
+            for letter in word:
+                corpus_copy = [w for w in corpus_copy if letter not in w]
+        return words
+
     # Define what you think is the best word to guess
     # I provided self.letFreq which is a dictionary of frequency of letters
     # But you might want to use other options, this wordscore is based only on letterfrequency * not having repeated letters
@@ -25,10 +35,11 @@ class Wordle():
             total += self.letFreq[l]
         return total * len(set(word))
 
-    def findBestGuess(self):
+    def findBestGuess(self, corpus=None):
+        wordSet = corpus or self.corpus
         max = 0
         bestword = ''
-        for word in self.corpus:
+        for word in wordSet:
             score = self.wordscore(word)
             if score > max:
                 bestword = word
@@ -78,7 +89,8 @@ class Wordle():
 
     def game(self):
         guesses = 1
-        starting_words = ['shear', 'wound', 'blimp']
+        # starting_words = ['shear', 'wound', 'blimp']
+        starting_words = self.getStartingWords()
         for word in starting_words:
             if self.guess(word):
                 return guesses
